@@ -6,7 +6,6 @@ import { Comment } from './Comment';
 import styles from './Post.module.css'
 import { Avatar } from './Avatar';
 import { useState } from 'react';
-import { Cpu } from 'phosphor-react';
 
 
 export function Post({author, content, publishedAt}){
@@ -20,8 +19,6 @@ export function Post({author, content, publishedAt}){
     const publishedDateFormatted =  format(publishedAt,"d 'de' LLLL 'às' HH:mm'h'",{
         locale: ptBR
     })
-
-
 
     const publishedDateRelativeToNow = formatDistanceToNow(publishedAt, { 
         locale: ptBR,
@@ -37,8 +34,26 @@ export function Post({author, content, publishedAt}){
     }
 
     function handleNewCommentChange(){
+
+        event.target.setCustomValidity('')
+
         setNewCommentText(event.target.value)
     }
+
+    function deleteComment(commentToBeDeleted){
+
+        const commentsWithoutDeletedOne = comments.filter(comment=>{
+            return comment !== commentToBeDeleted
+        })
+
+        setComments(commentsWithoutDeletedOne)
+    }
+
+    function handleNewCommentInvalid(){
+        event.target.setCustomValidity('O comentário não pode ser vazio')
+    }
+
+    const isNewCommentEmpty = newCommentText.length === 0
 
     return(
         <article className={styles.post}>
@@ -76,16 +91,28 @@ export function Post({author, content, publishedAt}){
                 name="comment"
                 value={newCommentText}
                 placeholder="Deixe seu comentário"
-                 />
+                onInvalid={handleNewCommentInvalid}
+                required
+                />
 
                 <footer>
-                    <button type='submit'>Publicar</button>
+                    <button 
+                    type='submit'
+                    disabled={isNewCommentEmpty}
+                    >
+                        Publicar
+                    </button>
 
                 </footer>
             </form>
             <div className={styles.commentList}>
                 {comments.map(comment=>{
-                    return <Comment key={comment} content={comment}/>
+                    return (
+                    <Comment 
+                    key={comment} 
+                    content={comment}
+                    onDeleteComment={deleteComment}/>
+                    )
                 })}
             </div>
         </article>
