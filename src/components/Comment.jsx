@@ -11,9 +11,10 @@ export function Comment({content, onDeleteComment}) {
         onDeleteComment(content)
     }
     function handleLikeComment(){
-        setLikeCount(likeCount + 1)
+        setLikeCount((state)=>{// sempre que o estado anterior é necessário, é necessário passar uma função como parâmetro
+            return state + 1
+        })
     }
-
     return (
         <div className={styles.comment}>
             <Avatar hasBorder={false} src="https://github.com/RafaelMMuniz.png" />
