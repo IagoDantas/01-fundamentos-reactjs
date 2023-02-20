@@ -29,9 +29,9 @@ const posts = [
       role: 'CTO @Rocketseat'
     },
     content: [
-      {type: 'paragraph', content: 'Fala galera 👋🏽👋🏽'},
+      {type: 'paragraph', content: 'Fala 👋🤙'},
       {type: 'paragraph', content: 'Acabei de subir mais um projeto no meu portifólio, É um projeto que fiz no NLW Return, evento da Rocketseat'},
-      {type: 'link', content: 'iago.design/doctorcare'},
+      {type: 'link', content: 'diego.design/doctorcare'},
 
     ],
     publishedAt: new Date('2023-02-10 08:13:00'),
